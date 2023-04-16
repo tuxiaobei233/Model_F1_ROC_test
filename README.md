@@ -40,39 +40,19 @@
 - False Negative（假负例，FN），被模型预测为负的正样本
 
 准确率（Accuracy） 是分类问题中最为原始的评价指标，准确率的定义是预测 正确的结果占总样本的百分比，其公式如下：
-$
-Accuracy=\frac{TP+TN}{TP+TN+FP+FN}
-$
-精确率（Precision）它是针对预测结果而言的，它的含义是在所有被预测为正的样本 中实际为正的样本的概率，意思就是在预测为正样本的结果中，我们 有多少把握可以预测正确，其公式如下：
-$
-Precision=\frac{TP}{TP+FP}
-$
-召回率（Recall）它是针对原样本而言的，它的含义是在实际为正的样本中被预测 为正样本的概率，其公式如下：
-$
-Recall=\frac{TP}{TP+FN}
-$
-综合评价指标 F1 得分，Precision和Recall指标有时是此消彼长的，即精准率高了，召回率 就下降，在一些场景下要兼顾精准率和召回率，最常见的方法就是 F1-Measure，又称F1-Score， 是Precision和Recall的调和平均，当F1-Score较高时，模型的性能越好。
-$
-F1-Score=2\times \frac{Precision\times Recall}{Precision+Recall}
-$
+$Accuracy=\frac{TP+TN}{TP+TN+FP+FN}$
+精确率（Precision）它是针对预测结果而言的，它的含义是在所有被预测为正的样本 中实际为正的样本的概率，意思就是在预测为正样本的结果中，我们 有多少把握可以预测正确，其公式如下：$Precision=\frac{TP}{TP+FP}$
+召回率（Recall）它是针对原样本而言的，它的含义是在实际为正的样本中被预测 为正样本的概率，其公式如下：$Recall=\frac{TP}{TP+FN}$
+综合评价指标 F1 得分，Precision和Recall指标有时是此消彼长的，即精准率高了，召回率 就下降，在一些场景下要兼顾精准率和召回率，最常见的方法就是 F1-Measure，又称F1-Score， 是Precision和Recall的调和平均，当F1-Score较高时，模型的性能越好。$F1-Score=2\times \frac{Precision\times Recall}{Precision+Recall}$
 而对于本项目的三分类问题而言，我们要依次选取三个标签的每一个作为正样本，然后把其他两个标签作为负样本，计算当前的 TP、TN、FP、FN，依据之前的公式分别计算准确率、精确率、召回率、综合评价指标 F1 得分，再对所有的样本取平均值，这样就得到了最终的确率，精确率，召回率，F1值。具体而言，对于三分类的混淆矩阵 $F_{i,j}$ ，$F_{i,j}$ 即实际标签为 $i$ 的样本被预测为 $j$ 的样本数量，$N$ 为样本总数。
-$
-Accuracy=\frac{F_{0,0}+F_{1,1}+F_{2,2}}{N}\\
-Precision=(\frac{F_{0,0}}{F_{0,0}+F_{1,0}+F_{2,0}}+\frac{F_{1,1}}{F_{0,1}+F_{1,1}+F_{2,1}}+\frac{F_{2,2}}{F_{0,2}+F_{1,2}+F_{2,2}})\times \frac{1}{3}\\
-Recall=(\frac{F_{0,0}}{F_{0,0}+F_{0,1}+F_{0,2}}+\frac{F_{1,1}}{F_{1,0}+F_{1,1}+F_{1,2}}+\frac{F_{2,2}}{F_{2,0}+F_{2,1}+F_{2,2}})\times \frac{1}{3}\\
-F1-Score=2\times \frac{Precision\times Recall}{Precision+Recall}
-$
+$Accuracy=\frac{F_{0,0}+F_{1,1}+F_{2,2}}{N}\\Precision=(\frac{F_{0,0}}{F_{0,0}+F_{1,0}+F_{2,0}}+\frac{F_{1,1}}{F_{0,1}+F_{1,1}+F_{2,1}}+\frac{F_{2,2}}{F_{0,2}+F_{1,2}+F_{2,2}})\times \frac{1}{3}\\Recall=(\frac{F_{0,0}}{F_{0,0}+F_{0,1}+F_{0,2}}+\frac{F_{1,1}}{F_{1,0}+F_{1,1}+F_{1,2}}+\frac{F_{2,2}}{F_{2,0}+F_{2,1}+F_{2,2}})\times \frac{1}{3}\\F1-Score=2\times \frac{Precision\times Recall}{Precision+Recall}$
 
 ROC（Receiver Operating Characteristic）曲线，又称接受者操作 特征曲线。该曲线最早应用于雷达信号检测领域，用于区分信号与噪 声。曲线的横坐标为FPR（假正例率），纵坐标为TPR(真正例率)，对 角线对应于“随机猜测”模型，而（0,1）则对应于将所有正例排在所 有反例之前的“理想模型”。FPR和TPR的定义如下：
 
 假正例率（ False Positive Rate ， FPR ）， 又 称 特 异 度 （specificity）：
-$
-FPR=\frac{FP}{FP+TN}
-$
+$FPR=\frac{FP}{FP+TN}$
 真正例率（True Positive Rate，TPR），又称灵敏度（sensitivity），
-$
-TPR=\frac{TP}{TP+FN}
-$
+$TPR=\frac{TP}{TP+FN}$
 若一个模型A的ROC曲线被另一个模型B的ROC曲 线完全包住，则称B的性能优于A。若A和B的曲线发生了交叉，则谁 的曲线下的面积大，谁的性能更优。AUC(Area Under Curve)又称为曲 线下面积，是处于ROC曲线下方的那部分面积的大小。
 
 对于ROC曲线下方面积越大表明模型性能越好，于是AUC就是 由此产生的评价指标。通常，AUC的值介于0.5到1.0之间，较大的AUC 代表了较好的性能。如果模型是完美的，那么它的AUC=1，证明所有 正例排在了负例的前面，如果模型是个简单的二类随机猜测模型，那 么它的AUC=0.5，如果一个模型好于另一个，则它的曲线下方面积相 对较大，对应的AUC值也会较大。
